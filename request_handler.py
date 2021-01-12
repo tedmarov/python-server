@@ -55,34 +55,28 @@ class HandleRequests(BaseHTTPRequestHandler):
         # Parse the URL and capture the tuple that is returned
         (resource, id) = self.parse_url(self.path)
 
-        if resource == "/animals":
+        if resource == "animals":
             if id is not None:
                 response = f"{get_single_animal(id)}"
 
             else:
                 response = f"{get_all_animals()}"
 
-        self.wfile.write(response.encode())
-
-        if resource == "/locations":
+        if resource == "locations":
             if id is not None:
                 response = f"{get_single_location(id)}"
 
             else:
                 response = f"{get_all_locations()}"
 
-        self.wfile.write(response.encode())
-
-        if resource == "/employees":
+        if resource == "employees":
             if id is not None:
                 response = f"{get_single_employee(id)}"
 
             else:
                 response = f"{get_all_employees()}"
 
-        self.wfile.write(response.encode())
-
-        if resource == "/customers":
+        if resource == "customers":
             if id is not None:
                 response = f"{get_single_customer(id)}"
 
