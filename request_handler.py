@@ -1,9 +1,9 @@
 import json
 from http.server import BaseHTTPRequestHandler, HTTPServer
-from animals import get_all_animals, get_single_animal, create_animal
-from locations import get_all_locations, get_single_location, create_location
-from employees import get_all_employees, get_single_employee, create_employee
-from customers import get_all_customers, get_single_customer, create_customer
+from animals import get_all_animals, get_single_animal, create_animal, delete_animal
+from locations import get_all_locations, get_single_location, create_location, delete_location
+from employees import get_all_employees, get_single_employee, create_employee, delete_employee
+from customers import get_all_customers, get_single_customer, create_customer, delete_customer
 
 # Here's a class. It inherits from another class.
 # For now, think of a class as a container for functions that
@@ -139,6 +139,34 @@ class HandleRequests(BaseHTTPRequestHandler):
 
         # Encode the new customer and send in response
         self.wfile.write(f"{new_customer}".encode())
+
+def do_DELETE(self):
+    # Set a 204 response code
+    self._set_headers(204)
+
+    # Parse the URL
+    (resource, id) = self.parse_url(self.path)
+
+    # Delete a single animal from the list
+    if resource == "animals":
+        delete_animal(id)
+
+    # Delete a single location from the list
+    if resource == "locations":
+        delete_location(id)
+
+    # Delete a single employee from the list
+    if resource == "employees":
+        delete_employee(id)
+
+    # Delete a single customer from the list
+    if resource == "customers":
+        delete_customer(id)
+
+    # Encode the new item and send in response
+    self.wfile.write("".encode())
+
+
 
 # This function is not inside the class. It is the starting
 # point of this application.
