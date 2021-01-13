@@ -53,7 +53,7 @@ def get_all_locations():
     return json.dumps(locations)
 
 # Function with a single parameter
-def get_single_animal(id):
+def get_single_location(id):
     with sqlite3.connect("./kennel.db") as conn:
         conn.row_factory = sqlite3.Row
         db_cursor = conn.cursor()
@@ -72,10 +72,10 @@ def get_single_animal(id):
         # Load the single result into memory
         data = db_cursor.fetchone()
 
-        # Create an animal instance from the current row
-        animal = Location(data['id'], data['name'], data['address'])
+        # Create an location instance from the current row
+        location = Location(data['id'], data['name'], data['address'])
 
-        return json.dumps(animal.__dict__)
+        return json.dumps(location.__dict__)
 
 def create_location(location):
     # Get the id value of the last location in the list
