@@ -1,8 +1,9 @@
+from animals.request import get_animals_by_status
 import json
 from http.server import BaseHTTPRequestHandler, HTTPServer
-from animals import get_all_animals, get_single_animal, get_animals_by_location, create_animal, delete_animal, update_animal
+from animals import get_all_animals, get_single_animal, get_animals_by_location, get_animals_by_status, create_animal, delete_animal, update_animal
 from locations import get_all_locations, get_single_location, create_location, delete_location, update_location
-from employees import get_all_employees, get_single_employee, create_employee, delete_employee, update_employee
+from employees import get_all_employees, get_single_employee, get_employees_by_location, create_employee, delete_employee, update_employee
 from customers import get_all_customers, get_single_customer, get_customers_by_email, create_customer, delete_customer, update_customer
 
 # Here's a class. It inherits from another class.
@@ -105,10 +106,23 @@ class HandleRequests(BaseHTTPRequestHandler):
             if key == "email" and resource == "customers":
                 response = get_customers_by_email(value)
 
-            # CHECK VALUE BEING PASSED; MAY NOT BE INTEGER
-            if key == "location" and resource == "animals":
-                response = get_animals_by_location(int(value))            
-                print(response)
+            # Is the resource `customers` and was there a
+            # query parameter that specified the customer
+            # email as a filtering value?
+            if key == "location_id" and resource == "animals":
+                response = get_animals_by_location(int(value))
+
+            # Is the resource `customers` and was there a
+            # query parameter that specified the customer
+            # email as a filtering value?
+            if key == "location_id" and resource == "employees":
+                response = get_employees_by_location(int(value))
+
+            # Is the resource `customers` and was there a
+            # query parameter that specified the customer
+            # email as a filtering value?
+            if key == "status" and resource == "animals":
+                response = get_animals_by_status(value)
 
         # RESPONSE DOES NOT WANT TO BE ENCODED
         self.wfile.write(response.encode())
