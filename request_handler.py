@@ -1,4 +1,3 @@
-from animals.request import get_animals_by_status
 import json
 from http.server import BaseHTTPRequestHandler, HTTPServer
 from animals import get_all_animals, get_single_animal, get_animals_by_location, get_animals_by_status, create_animal, delete_animal, update_animal
@@ -92,8 +91,6 @@ class HandleRequests(BaseHTTPRequestHandler):
                 else:
                     response = f"{get_all_locations()}"
 
-
-
         # Response from parse_url() is a tuple with 3
         # items in it, which means the request was for
         # `/resource?parameter=value`
@@ -106,21 +103,21 @@ class HandleRequests(BaseHTTPRequestHandler):
             if key == "email" and resource == "customers":
                 response = get_customers_by_email(value)
 
-            # Is the resource `customers` and was there a
-            # query parameter that specified the customer
-            # email as a filtering value?
+            # Is the resource `animals` and was there a
+            # query parameter that specified the animal
+            # location_id as a filtering value?
             if key == "location_id" and resource == "animals":
                 response = get_animals_by_location(int(value))
 
-            # Is the resource `customers` and was there a
-            # query parameter that specified the customer
-            # email as a filtering value?
+            # Is the resource `employees` and was there a
+            # query parameter that specified the employee
+            # location_id as a filtering value?
             if key == "location_id" and resource == "employees":
                 response = get_employees_by_location(int(value))
 
-            # Is the resource `customers` and was there a
-            # query parameter that specified the customer
-            # email as a filtering value?
+            # Is the resource `animals` and was there a
+            # query parameter that specified the animal
+            # status as a filtering value?
             if key == "status" and resource == "animals":
                 response = get_animals_by_status(value)
 
@@ -208,7 +205,6 @@ class HandleRequests(BaseHTTPRequestHandler):
         self.wfile.write("".encode())
 
     def do_PUT(self):
-        self._set_headers(204)
         content_len = int(self.headers.get('content-length', 0))
         post_body = self.rfile.read(content_len)
         post_body = json.loads(post_body)
@@ -216,21 +212,28 @@ class HandleRequests(BaseHTTPRequestHandler):
         # Parse the URL
         (resource, id) = self.parse_url(self.path)
 
-        # Delete a single animal from the list
+        success = False
+
         if resource == "animals":
-            update_animal(id, post_body)
+            success = update_animal(id, post_body)
+        # rest of the elif's
 
-        # Delete a single location from the list
-        if resource == "locations":
-            update_location(id, post_body)
+        # # Delete a single location from the list
+        # if resource == "locations":
+        #     update_location(id, post_body)
         
-        # Delete a single employee from the list
-        if resource == "employees":
-            update_employee(id, post_body)
+        # # Delete a single employee from the list
+        # if resource == "employees":
+        #     update_employee(id, post_body)
 
-        # Delete a single customer from the list
-        if resource == "customers":
-            update_customer(id, post_body)
+        # # Delete a single customer from the list
+        # if resource == "customers":
+        #     update_customer(id, post_body)
+
+        if success:
+            self._set_headers(204)
+        else:
+            self._set_headers(404)
 
         # Encode the new animal and send in response
         self.wfile.write("".encode())
