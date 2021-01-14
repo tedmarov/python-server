@@ -106,21 +106,21 @@ class HandleRequests(BaseHTTPRequestHandler):
             if key == "email" and resource == "customers":
                 response = get_customers_by_email(value)
 
-            # Is the resource `customers` and was there a
-            # query parameter that specified the customer
-            # email as a filtering value?
+            # Is the resource `animals` and was there a
+            # query parameter that specified the animal
+            # location_id as a filtering value?
             if key == "location_id" and resource == "animals":
                 response = get_animals_by_location(int(value))
 
-            # Is the resource `customers` and was there a
-            # query parameter that specified the customer
-            # email as a filtering value?
+            # Is the resource `employees` and was there a
+            # query parameter that specified the employee
+            # location_id as a filtering value?
             if key == "location_id" and resource == "employees":
                 response = get_employees_by_location(int(value))
 
-            # Is the resource `customers` and was there a
-            # query parameter that specified the customer
-            # email as a filtering value?
+            # Is the resource `animals` and was there a
+            # query parameter that specified the animal
+            # status as a filtering value?
             if key == "status" and resource == "animals":
                 response = get_animals_by_status(value)
 
