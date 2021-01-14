@@ -1,3 +1,6 @@
+SELECT * FROM Animal ORDER BY id DESC;
+
+
 SELECT
     e.id,
     e.name,

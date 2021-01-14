@@ -2,7 +2,7 @@ import json
 from http.server import BaseHTTPRequestHandler, HTTPServer
 from animals import get_all_animals, get_single_animal, get_animals_by_location, get_animals_by_status, create_animal, delete_animal, update_animal
 from locations import get_all_locations, get_single_location, create_location, delete_location, update_location
-from employees import get_all_employees, get_single_employee, get_employees_by_location, create_employee, delete_employee, update_employee
+from employees import get_all_employees, get_single_employee, get_employees_by_location, save_employee, delete_employee, update_employee
 from customers import get_all_customers, get_single_customer, get_customers_by_email, create_customer, delete_customer, update_customer
 
 # Here's a class. It inherits from another class.
@@ -161,10 +161,10 @@ class HandleRequests(BaseHTTPRequestHandler):
         self.wfile.write(f"{new_location}".encode())
 
         # Add a new employee to the list. Don't worry about
-        # the orange squiggle, you'll define the create_employee
+        # the orange squiggle, you'll define the save_employee
         # function next.
         if resource == "employees":
-            new_employee = create_employee(post_body)
+            new_employee = save_employee(post_body)
 
         # Encode the new employee and send in response
         self.wfile.write(f"{new_employee}".encode())
