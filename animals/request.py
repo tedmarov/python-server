@@ -93,6 +93,9 @@ def get_all_animals():
             # Add the dictionary representation of the location to the animal
             animal.location = location.__dict__
 
+            # Add the dictionary representation of the location to the animal
+            animal.location = customer.__dict__
+
             # Add the dictionary representation of the animal to the list
             animals.append(animal.__dict__)
 
