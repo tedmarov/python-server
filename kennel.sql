@@ -1,7 +1,8 @@
 SELECT * FROM Animal ORDER BY id DESC;
 
--- Get only the animal rows where the `id` field value is 3
-SELECT (
+(-- Get only the animal rows where the `id` field value is 3);
+
+SELECT
     a.id,
     a.name,
     a.breed,
@@ -9,10 +10,10 @@ SELECT (
     a.location_id,
     a.customer_id
 FROM animal a
-WHERE a.id = 3);
+WHERE (a.id = 3);
 
 
-SELECT (
+SELECT
     e.id,
     e.name,
     e.address,
@@ -21,7 +22,7 @@ SELECT (
     l.address location_address
 FROM Employee e
 JOIN Location l
-    ON l.id = e.location_id);
+    ON (l.id = e.location_id);
 
 
 
@@ -71,7 +72,7 @@ INSERT INTO `Animal` VALUES (null, "Doodles", "Kennel", "Poodle", 3, 1);
 INSERT INTO `Animal` VALUES (null, "Daps", "Kennel", "Boxer", 2, 2);
 
 
--- This is a comment
+
 CREATE TABLE `Location` (
 	`id`	INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
 	`name`	TEXT NOT NULL,
