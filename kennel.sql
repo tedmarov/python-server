@@ -1,7 +1,18 @@
 SELECT * FROM Animal ORDER BY id DESC;
 
+-- Get only the animal rows where the `id` field value is 3
+SELECT (
+    a.id,
+    a.name,
+    a.breed,
+    a.status,
+    a.location_id,
+    a.customer_id
+FROM animal a
+WHERE a.id = 3);
 
-SELECT
+
+SELECT (
     e.id,
     e.name,
     e.address,
@@ -10,11 +21,11 @@ SELECT
     l.address location_address
 FROM Employee e
 JOIN Location l
-    ON l.id = e.location_id
+    ON l.id = e.location_id);
 
 
 
-SELECT
+SELECT (
     a.id,
     a.name,
     a.breed,
@@ -31,7 +42,7 @@ FROM Animal a
 JOIN Location l
     ON l.id = a.location_id
 JOIN Customer c
-	ON c.id = a.customer_id
+	ON c.id = a.customer_id);
 
 INSERT INTO `Animal` VALUES (null, "Daps", "Kennel", "Boxer", 2, 2);
 
