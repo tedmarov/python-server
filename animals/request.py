@@ -117,18 +117,37 @@ def get_single_animal(id):
             a.breed,
             a.status,
             a.location_id,
-            a.customer_id
+            a.customer_id,
+            l.name location_name,
+            c.id customer_id,
+            c.name customer_name,
+            c.address address
         FROM animal a
+        JOIN Location l
+            ON l.id = a.location_id
+        JOIN Customer c
+            ON c.id = a.customer_id
         WHERE a.id = ?
         """, ( id, ))
 
         # Load the single result into memory
         data = db_cursor.fetchone()
 
-        # Create an animal instance from the current row
+        # Create an animal instance from the current data
         animal = Animal(data['id'], data['name'], data['breed'],
                             data['status'], data['location_id'],
                             data['customer_id'])
+
+        # Create a Location instance from the current data
+        # Add the dictionary representation of the location to the animal
+        location = Location(data['location_id'], data['location_name'])
+        animal.location = location.__dict__
+
+        # Create a Customer instance from the current data
+        # Add the dictionary representation of the location to the animal
+        customer = Customer(data['customer_id'], data['customer_name'], 
+                            data['address'])
+        animal.customer = customer.__dict__
 
         return json.dumps(animal.__dict__)
 
@@ -202,8 +221,8 @@ def create_animal(new_animal):
         VALUES
             ( ?, ?, ?, ?, ?);
         """, (new_animal['name'], new_animal['breed'],
-                new_animal['status'], new_animal['location_id'],
-                new_animal['customer_id'], ))
+                new_animal['status'], new_animal['locationId'],
+                new_animal['customerId'], ))
 
         # The `lastrowid` property on the cursor will return
         # the primary key of the last thing that got added to
@@ -237,12 +256,12 @@ def update_animal(id, new_animal):
                 name = ?,
                 breed = ?,
                 status = ?,
-                location_id = ?,
-                customer_id = ?
+                locationId = ?,
+                customerId = ?
         WHERE id = ?
         """, (new_animal['name'], new_animal['breed'],
-              new_animal['status'], new_animal['location_id'],
-              new_animal['customer_id'], id, ))
+              new_animal['status'], new_animal['locationId'],
+              new_animal['customerId'], id, ))
 
         # Were any rows affected?
         # Did the client send an `id` that exists?
