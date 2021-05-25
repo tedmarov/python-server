@@ -99,24 +99,28 @@ class HandleRequests(BaseHTTPRequestHandler):
 
             # Is the resource `customers` and was there a
             # query parameter that specified the customer
+            # http://localhost:8088/customers?email=jenna@solis.com
             # email as a filtering value?
             if key == "email" and resource == "customers":
                 response = get_customers_by_email(value)
 
             # Is the resource `animals` and was there a
             # query parameter that specified the animal
+            # http://localhost:8088/animals?location_id=1
             # location_id as a filtering value?
             if key == "location_id" and resource == "animals":
                 response = get_animals_by_location(int(value))
 
             # Is the resource `employees` and was there a
             # query parameter that specified the employee
+            # http://localhost:8088/employees?location_id=1
             # location_id as a filtering value?
             if key == "location_id" and resource == "employees":
                 response = get_employees_by_location(int(value))
 
             # Is the resource `animals` and was there a
             # query parameter that specified the animal
+            # http://localhost:8088/animals?status=Status
             # status as a filtering value?
             if key == "status" and resource == "animals":
                 response = get_animals_by_status(value)
